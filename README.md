@@ -1,1 +1,1 @@
-# YEAFitness_Veritaban-_Projesi
+# YEAFitness_Veritabani_Projesi
