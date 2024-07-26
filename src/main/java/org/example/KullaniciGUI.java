@@ -280,10 +280,10 @@ public class KullaniciGUI {
         }
     }
 
-    public static void createDersRandevusu(Kullanici kullanici, int ders_saati, String brans) throws ClassNotFoundException, SQLException {
+    public static void createDersRandevusu(Kullanici kullanici, int ders_saati,String brans) throws ClassNotFoundException, SQLException {
         String[] saatler;
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName(".com.mysql.cj.jdbcDriver");
         } catch (ClassNotFoundException e) {
             System.out.println("driver çalışmadı." + e);
         }
@@ -295,23 +295,47 @@ public class KullaniciGUI {
             while (rs.next()) {
                 int ID = rs.getInt("egitmen_id");
                 String isim = rs.getString("isim");
+
+//                System.out.println(isim+" "+ ID);
                 String saha_ismi = rs.getString("saha_ismi_eg");
                 String calisma_saatleri = rs.getString("calisma_saatleri");
+                int kontenjan = rs.getInt("kontenjan_eg");
+                int anlik_doluluk_eg = rs.getInt("anlik_doluluk_eg");
 
+//                System.out.println(saha_ismi);
+//
                 saatler = calisma_saatleri.split("-");
                 int[] saatler_int = new int[2];
-                for (int i = 0; i < 2; i++)
-                    saatler_int[i] = Integer.parseInt(saatler[i]);
+                for(int i=0;i<2;i++)
+                    saatler_int[i]=Integer.parseInt(saatler[i]);
+//                for(int i=0;i<2;i++)
+//                    System.out.println(saatler_int[i]);
 
-                if (saatler_int[0] < ders_saati && ders_saati < saatler_int[1] && brans.equals(saha_ismi)) {
+
+
+                if (saatler_int[0] < ders_saati && ders_saati < saatler_int[1] && brans.equals(saha_ismi)&&anlik_doluluk_eg<kontenjan) {
                     System.out.println(saha_ismi + " " + isim);
+
                     AssignEgitmenID(kullanici.getKullanici_id(), ID);
-                    break;
-                } else if (saha_ismi.equals(brans))
+                    /*sql="UPDATE kullanici SET egitmen_id = ID";
+                    preparedStatement = connection.prepareStatement(sql);
+                    break;*/
+                    String sql2="UPDATE egitmen SET anlik_doluluk_eg = anlik_doluluk_eg + 1 where isim=?";
+                    PreparedStatement preparedStatement2 = connection.prepareStatement(sql2);
+                    preparedStatement2.setString(1, isim);
+                    preparedStatement2.executeUpdate();
+
+                    updateDers_alir(ID,kullanici.getKullanici_id());
+
+
+                }
+                else if (saha_ismi.equals(brans))
                     System.out.println("Aradığınız kriterlerde randevu bulunamamaktadır.");
+
             }
 
-        } catch (SQLException e) {
+        } catch (
+                SQLException e) {
             System.out.println("bağlantı başarısız");
         }
     }
@@ -367,6 +391,35 @@ public class KullaniciGUI {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    public static void updateDers_alir(int egitmen_id, int kullanici_id) throws SQLException {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection connection = DriverManager.getConnection(jdbcUrl, username, password);
+            Statement statement = connection.createStatement();
+
+            String sql = "INSERT INTO egitmen_dersleri (egitmen_id_ders, kullanici_id_ders) VALUES (?, ?)";
+            preparedStatement = connection.prepareStatement(sql);
+
+            preparedStatement.setInt(1, egitmen_id);
+            preparedStatement.setInt(2, kullanici_id);
+
+            int result = preparedStatement.executeUpdate();
+            System.out.println("Inserted rows: " + result);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
         }
     }
 }
