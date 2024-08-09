@@ -238,10 +238,16 @@ public class KullaniciGUI {
         createExerciseButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 EgzersizProgrami program = new EgzersizProgrami(kul);
-                createEgzersizProgrami(program);
-                JOptionPane.showMessageDialog(optionsFrame, "Egzersiz programı oluşturuldu.");
-                showExerciseProgram(program);
+                boolean isProgramCreated = createEgzersizProgrami(program);
+
+                if (isProgramCreated) {
+                    JOptionPane.showMessageDialog(optionsFrame, "Egzersiz programı başarıyla oluşturuldu.");
+                    showExerciseProgram(program);
+                } else {
+                    JOptionPane.showMessageDialog(optionsFrame, "Bu kullanıcı için zaten bir egzersiz programı mevcut.");
+                }
             }
+
         });
 
         JButton getTrainingButton = new JButton("Eğitim al !");
@@ -267,25 +273,57 @@ public class KullaniciGUI {
         optionsFrame.setVisible(true);
     }
 
-    public static void createEgzersizProgrami(EgzersizProgrami egzersizProgrami) {
+    public static boolean createEgzersizProgrami(EgzersizProgrami egzersizProgrami) {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(jdbcUrl, username, password);
-            Statement statement = connection.createStatement();
 
-            String sql = "INSERT INTO egzersiz_programi(kullanici_ID, egzersiz_ismi, zorluk_seviyesi, ortalama_kalori_yakimi) " +
-                    "VALUES (" + egzersizProgrami.getKullanici_ID() + ", '" + egzersizProgrami.getEgzersiz_ismi() + "', '" + egzersizProgrami.getZorluk_seviyesi()
-                    + "', " + egzersizProgrami.getOrtalama_kalori_yakimi() + ")";
+            // Aynı kullanıcı için egzersiz programının olup olmadığını kontrol et
+            String checkSql = "SELECT COUNT(*) FROM egzersiz_programi WHERE kullanici_ID = ? AND egzersiz_ismi = ?";
+            PreparedStatement checkStmt = connection.prepareStatement(checkSql);
+            checkStmt.setInt(1, egzersizProgrami.getKullanici_ID());
+            checkStmt.setString(2, egzersizProgrami.getEgzersiz_ismi());
+            ResultSet resultSet = checkStmt.executeQuery();
 
-            int result = statement.executeUpdate(sql);
-            System.out.println("Inserted rows: " + result);
+            resultSet.next();
+            int count = resultSet.getInt(1);
 
-            connection.close();
+            if (count > 0) {
+                System.out.println("Bu kullanıcı için zaten bir egzersiz programı mevcut.");
+                return false;  // Program oluşturulmadı
+            } else {
+                // Egzersiz programı oluştur
+                String sql = "INSERT INTO egzersiz_programi(kullanici_ID, egzersiz_ismi, zorluk_seviyesi, ortalama_kalori_yakimi) " +
+                        "VALUES (?, ?, ?, ?)";
+
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setInt(1, egzersizProgrami.getKullanici_ID());
+                preparedStatement.setString(2, egzersizProgrami.getEgzersiz_ismi());
+                preparedStatement.setString(3, egzersizProgrami.getZorluk_seviyesi());
+                preparedStatement.setDouble(4, egzersizProgrami.getOrtalama_kalori_yakimi());
+
+                int result = preparedStatement.executeUpdate();
+                System.out.println("Inserted rows: " + result);
+
+                preparedStatement.close();
+                return true;  // Program başarıyla oluşturuldu
+            }
+
         } catch (Exception e) {
             System.out.println("Egzersiz programı oluşturulamadı.");
             e.printStackTrace();
+            return false;  // Program oluşturulamadı
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
+
 
     public static void showExerciseProgram(EgzersizProgrami egzersizProgrami) {
         JFrame exerciseFrame = new JFrame("Egzersiz Programı");
