@@ -43,7 +43,7 @@ CREATE TABLE `egitmen` (
 
 LOCK TABLES `egitmen` WRITE;
 /*!40000 ALTER TABLE `egitmen` DISABLE KEYS */;
-INSERT INTO `egitmen` VALUES (0,'Yagmur','7-22','pilates',100,0),(1,'Murat','10-16','pilates',10,0),(2,'Ahmet','12-18','basketbol',10,0),(3,'Aylin','8-14','fitness',5,0),(4,'Yusuf','9-15','tenis',2,0),(5,'Acelya','7-14','voleybol',6,1),(6,'Ferit','7-15','yüzme',6,1);
+INSERT INTO `egitmen` VALUES (0,'Yagmur','7-22','pilates',100,0),(1,'Murat','10-16','pilates',10,0),(2,'Ahmet','12-18','basketbol',10,1),(3,'Aylin','8-14','fitness',5,3),(4,'Yusuf','9-15','tenis',2,2),(5,'Acelya','7-14','voleybol',6,2),(6,'Ferit','7-15','yüzme',6,3);
 /*!40000 ALTER TABLE `egitmen` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -96,7 +96,7 @@ CREATE TABLE `egitmen_dersleri` (
 
 LOCK TABLES `egitmen_dersleri` WRITE;
 /*!40000 ALTER TABLE `egitmen_dersleri` DISABLE KEYS */;
-INSERT INTO `egitmen_dersleri` VALUES (4,3),(5,4),(5,50),(6,576);
+INSERT INTO `egitmen_dersleri` VALUES (2,55),(3,66),(3,119),(4,3),(5,4),(5,50),(6,500),(6,571),(6,576);
 /*!40000 ALTER TABLE `egitmen_dersleri` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -123,7 +123,7 @@ CREATE TABLE `egzersiz_programi` (
 
 LOCK TABLES `egzersiz_programi` WRITE;
 /*!40000 ALTER TABLE `egzersiz_programi` DISABLE KEYS */;
-INSERT INTO `egzersiz_programi` VALUES (1,'squat','orta',660),(67,' 30 dakika 5km/h hızda yürüyüş  15 dakika eliptik bisiklet ','kolay',600),(90,' 4x12 thigh adductor  3x15 barbell hip thrust 4x12 squat 15 dakika 7km/h hızda koşu  10 dakika recumbent bisiklet ','orta',700),(97,' 4x12 thigh adductor  3x15 barbell hip thrust 4x12 squat 15 dakika 7km/h hızda koşu  10 dakika recumbent bisiklet ','orta',700),(123,'','orta',700),(576,' 4x12 thigh adductor  3x15 barbell hip thrust 4x12 squat 15 dakika 7km/h hızda koşu  10 dakika recumbent bisiklet ','orta',700),(678,' 4x12 barbell bench press  4x12 wide grip latt pulldown  4x12 squat 15 dakika 7km/h hızda koşu  10 dakika eliptik bisiklet ','orta',900);
+INSERT INTO `egzersiz_programi` VALUES (1,'squat','orta',660),(55,' 4x12 thigh adductor  3x15 barbell hip thrust 4x12 squat 15 dakika 7km/h hızda koşu  10 dakika recumbent bisiklet ','orta',700),(67,' 30 dakika 5km/h hızda yürüyüş  15 dakika eliptik bisiklet ','kolay',600),(90,' 4x12 thigh adductor  3x15 barbell hip thrust 4x12 squat 15 dakika 7km/h hızda koşu  10 dakika recumbent bisiklet ','orta',700),(97,' 4x12 thigh adductor  3x15 barbell hip thrust 4x12 squat 15 dakika 7km/h hızda koşu  10 dakika recumbent bisiklet ','orta',700),(123,'','orta',700),(500,' 4x12 barbell bench press  4x12 wide grip latt pulldown  4x12 squat 15 dakika 7km/h hızda koşu  10 dakika eliptik bisiklet ','orta',900),(576,' 4x12 thigh adductor  3x15 barbell hip thrust 4x12 squat 15 dakika 7km/h hızda koşu  10 dakika recumbent bisiklet ','orta',700),(678,' 4x12 barbell bench press  4x12 wide grip latt pulldown  4x12 squat 15 dakika 7km/h hızda koşu  10 dakika eliptik bisiklet ','orta',900);
 /*!40000 ALTER TABLE `egzersiz_programi` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -158,7 +158,7 @@ CREATE TABLE `kullanici` (
 
 LOCK TABLES `kullanici` WRITE;
 /*!40000 ALTER TABLE `kullanici` DISABLE KEYS */;
-INSERT INTO `kullanici` VALUES (1,'Can','80',175,90.00,NULL,'erkek',19980215,'05350625898',NULL),(2,'Elif','55',165,70.00,NULL,'kiz',20031002,'05476830715',1),(3,'Arif',NULL,187,92.00,NULL,'erkek',19960402,'05968657213',4),(4,'Melek','65',167,82.00,NULL,'kiz',20030810,'05375525812',5),(5,'Ali',NULL,180,85.00,NULL,'erkek',20040124,'05342347895',NULL),(6,'Ada','65',168,75.00,NULL,'kız',20040214,'05270119916',6),(7,'ahmet','70',170,78.00,0.00,'erkek',19900523,'05551234567',3),(8,'ayşe','56',154,66.00,0.00,'kadın',19990912,'null',4),(50,'ayten','46.94881889763779',154,66.00,1129.79,'Kadın',34,'null',5),(53,'zara','58.72047244094488',167,78.00,1249.43,'Kadın',33,'5677890987',4),(67,'selim','83.14173228346455',189,99.00,1814.85,'Erkek',32,'567987364',4),(77,'avasdfasdf','70',170,78.00,0.00,'erkek',19900523,'05551234567',3),(90,'ayşe','46.94881889763779',154,66.00,1129.79,'Kadın',34,'null',1),(97,'elif','49.66535433070866',157,89.00,1359.08,'Kadın',32,'5467890353',4),(123,'ayşe','46.94881889763779',154,66.00,1129.79,'Kadın',34,'null',4),(345,'ali','53.25984251968503',156,58.00,1303.53,'Erkek',24,'5678909874',4),(576,'yagmur','54.19291338582677',162,53.00,1071.18,'Kadın',20,'5678904345',6),(678,'veli','63.22047244094488',167,78.00,1585.84,'Erkek',23,'5477890398',4);
+INSERT INTO `kullanici` VALUES (1,'Can','80',175,90.00,NULL,'erkek',19980215,'05350625898',NULL),(2,'Elif','55',165,70.00,NULL,'kiz',20031002,'05476830715',1),(3,'Arif',NULL,187,92.00,NULL,'erkek',19960402,'05968657213',4),(4,'Melek','65',167,82.00,NULL,'kiz',20030810,'05375525812',5),(5,'Ali',NULL,180,85.00,NULL,'erkek',20040124,'05342347895',NULL),(6,'Ada','65',168,75.00,NULL,'kız',20040214,'05270119916',6),(7,'ahmet','70',170,78.00,0.00,'erkek',19900523,'05551234567',3),(8,'ayşe','56',154,66.00,0.00,'kadın',19990912,'null',4),(50,'ayten','46.94881889763779',154,66.00,1129.79,'Kadın',34,'null',5),(53,'zara','58.72047244094488',167,78.00,1249.43,'Kadın',33,'5677890987',4),(55,'hanne','55.0984251968504',163,50.00,1028.48,'Kadın',23,'5432455678',5),(66,'selin',NULL,167,60.00,NULL,'Kadın',21,'',3),(67,'selim','83.14173228346455',189,99.00,1814.85,'Erkek',32,'567987364',4),(77,'avasdfasdf','70',170,78.00,0.00,'erkek',19900523,'05551234567',3),(90,'ayşe','46.94881889763779',154,66.00,1129.79,'Kadın',34,'null',1),(97,'elif','49.66535433070866',157,89.00,1359.08,'Kadın',32,'5467890353',4),(119,'Aylo',NULL,187,67.00,NULL,'Kadın',21,'',3),(120,'Zeyno',NULL,210,79.00,NULL,'Kadın',21,'286398163',0),(123,'ayşe','46.94881889763779',154,66.00,1129.79,'Kadın',34,'null',4),(124,'ayuk','48.75984251968503',156,34.00,866.03,'Kadın',25,'',0),(345,'ali','53.25984251968503',156,58.00,1303.53,'Erkek',24,'5678909874',4),(500,'emo','65.93700787401575',170,56.00,1303.77,'Erkek',20,'',6),(571,'mehmet','84.04724409448819',190,87.00,1595.82,'Erkek',40,'',6),(576,'yagmur','54.19291338582677',162,53.00,1071.18,'Kadın',20,'5678904345',6),(678,'veli','63.22047244094488',167,78.00,1585.84,'Erkek',23,'5477890398',4);
 /*!40000 ALTER TABLE `kullanici` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -183,7 +183,7 @@ CREATE TABLE `randevu_alir` (
 
 LOCK TABLES `randevu_alir` WRITE;
 /*!40000 ALTER TABLE `randevu_alir` DISABLE KEYS */;
-INSERT INTO `randevu_alir` VALUES (1,NULL),(2,'yüzme'),(3,'tenis'),(4,'voleybol'),(5,'yüzme'),(6,'yüzme'),(90,'yüzme'),(576,'pilates');
+INSERT INTO `randevu_alir` VALUES (1,NULL),(2,'yüzme'),(3,'tenis'),(4,'voleybol'),(5,'yüzme'),(6,'yüzme'),(90,'yüzme'),(124,'yüzme'),(576,'pilates');
 /*!40000 ALTER TABLE `randevu_alir` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -209,7 +209,7 @@ CREATE TABLE `spor_sahasi` (
 
 LOCK TABLES `spor_sahasi` WRITE;
 /*!40000 ALTER TABLE `spor_sahasi` DISABLE KEYS */;
-INSERT INTO `spor_sahasi` VALUES ('basketbol',10,'9-21',2),('fitness',80,'9-21',2),('pilates',30,'16-21',3),('tenis',6,'9-21',2),('voleybol',12,'9-21',2),('yüzme',16,'10-19',12);
+INSERT INTO `spor_sahasi` VALUES ('basketbol',10,'9-21',2),('fitness',80,'9-21',2),('pilates',30,'16-21',3),('tenis',6,'9-21',2),('voleybol',12,'9-21',2),('yüzme',16,'10-19',16);
 /*!40000 ALTER TABLE `spor_sahasi` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -222,4 +222,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-07-31 17:06:04
+-- Dump completed on 2024-08-09 22:28:09
