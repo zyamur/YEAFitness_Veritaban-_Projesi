@@ -365,7 +365,7 @@ public class KullaniciGUI {
                 try {
                     boolean randevuSuccess = updateRandevu_alir(seçilenBranş, kullaniciId);
                     if (!randevuSuccess) {
-                        JOptionPane.showMessageDialog(gymFrame, "Randevu alınamadı, kontenjan dolmuş olabilir.");
+                        JOptionPane.showMessageDialog(gymFrame, "Randevu alınamadı, kontenjan dolmuş olabilir, ya da aynı kullanıcı kontenjan almaya çalışıyor olabilir.");
                         return;
                     }
 
@@ -380,6 +380,7 @@ public class KullaniciGUI {
                     JOptionPane.showMessageDialog(gymFrame, "Hata: " + ex.getMessage());
                 }
             }
+
 
         });
 
@@ -586,8 +587,9 @@ public class KullaniciGUI {
         }
 
         try (Connection connection = DriverManager.getConnection(jdbcUrl, username, password);
-             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM spor_sahasi")) {
+             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM spor_sahasi WHERE saha_ismi = ?")) {
 
+            preparedStatement.setString(1, brans);
             ResultSet rs = preparedStatement.executeQuery();
 
             while (rs.next()) {
@@ -602,19 +604,17 @@ public class KullaniciGUI {
                     saatler_int[i] = Integer.parseInt(saatler[i]);
                 }
 
-                if (saatler_int[0] <= randevu_saati && randevu_saati <= saatler_int[1] && brans.equals(Saha_ismi) && Anlik_doluluk < Kontenjan) {
+                if (saatler_int[0] <= randevu_saati && randevu_saati <= saatler_int[1] && Anlik_doluluk < Kontenjan) {
                     System.out.println(Saha_ismi + " " + randevu_saati);
 
                     // Spor sahasının doluluk oranını güncelle
-                    String sql2 = "UPDATE spor_sahasi SET anlik_doluluk = anlik_doluluk + 1 WHERE saha_ismi = ?";
+                    String sql2 = "UPDATE spor_sahasi SET anlik_doluluk = anlik_doluluk  WHERE saha_ismi = ?";
                     try (PreparedStatement preparedStatement2 = connection.prepareStatement(sql2)) {
                         preparedStatement2.setString(1, Saha_ismi);
                         preparedStatement2.executeUpdate();
                     }
 
-                    // Randevuyu güncelle
-                    boolean randevuSuccess = updateRandevu_alir(Saha_ismi, kullanici.getKullanici_id());
-                    return randevuSuccess; // Eğer randevu başarıyla alındıysa true döndür
+                    return true; // Randevu başarıyla alındı, işlemi tamamla
                 }
             }
 
@@ -625,6 +625,7 @@ public class KullaniciGUI {
             return false; // Bir hata meydana geldi
         }
     }
+
 
 
     public static void AssignEgitmenID(int kullanici_id, int egitmen_id) {
